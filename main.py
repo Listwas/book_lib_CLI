@@ -6,13 +6,15 @@ class Library:
         self.books = []
         self.args = ['title', 'author', 'pages', 'status']
         self.file_name = 'books_data.csv'
-        self.read_file()
+        self.load_books_data()
+        self.end = ''
         
 
-    def read_file(self):
+    def load_books_data(self):
         with open(self.file_name, 'r') as csvfile:
             cr = csv.reader(csvfile, delimiter='|')
 
+            # read & load books
             for row in cr:
                 book = {}
                 index = 0    
@@ -31,7 +33,7 @@ class Library:
 
         self.books.append(book)
 
-        # save data to file 
+        # save book data to file 
         with open(self.file_name, 'w') as file:
             w = csv.writer(file, delimiter='|')
             w.writerows([x.values() for x in self.books])
@@ -44,17 +46,20 @@ class Library:
                 print(self.books)
             case 'r':
                 """ remove book """
+            case 'e':
+                self.end = 'e'
+                
 
 
 def main():
-    end = ''
     lib = Library()
 
-    while end != 'e':
+    while lib.end != 'e':
         choice = input(
             'a - add book\n'
             'l - list all books\n'
             'r - remove book\n'
+            'e - exit\n'
         ).lower()
         lib.method_used(choice)
 
