@@ -1,0 +1,1 @@
+a personal terminal application to keep track of the books that I've read or that I want to read
