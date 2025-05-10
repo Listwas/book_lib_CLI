@@ -1,46 +1,42 @@
-import csv, os
+import json, os
 
 class Library:
 
     def __init__(self):
         self.books = []
         self.args = ['title', 'author', 'pages', 'status']
-        self.file_name = 'books_data.csv'
+        self.file_name = 'books_data.json'
+
+        # create file if one doesn't exist, then load book data
+        if not os.path.exists(self.file_name):
+            with open(self.file_name, 'w') as file:
+                data = json.write(file)
+
         self.load_books_data()
         self.end = ''
-        
 
+    # load file contents and store them in a book list 
     def load_books_data(self):
-        with open(self.file_name, 'r') as csvfile:
-            cr = csv.reader(csvfile, delimiter='|')
-
-            # read & load books
-            for row in cr:
-                book = {}
-                index = 0    
-                for item in self.args:
-                    index += 1
-                    book[item] = row[index-1]
-                self.books.append(book)
-
-
+        if os.path.getsize(self.file_name) > 0:
+            with open(self.file_name, 'r') as file:
+                data = json.load(file)
+                self.books.extend(data)
+    
+    # adding books to the JSON file and list of books
     def add_book(self):
-        print('\nadd your book')
-
         book = {}
         for item in self.args:
             book[item] = input(f'{item}: ')
-
         self.books.append(book)
 
-        # save book data to file 
         with open(self.file_name, 'w') as file:
-            w = csv.writer(file, delimiter='|')
-            w.writerows([x.values() for x in self.books])
-        
+            json.dump(self.books, file, indent = 4)
+     
+    # determinate which metod user selected
     def method_used(self, x):
         match x:
             case 'a':
+                print('\nadd your book')
                 self.add_book()
             case 'l':
                 print(self.books)
@@ -48,9 +44,7 @@ class Library:
                 """ remove book """
             case 'e':
                 self.end = 'e'
-                
-
-
+          
 def main():
     lib = Library()
 
