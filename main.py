@@ -15,6 +15,14 @@ class Library:
         self.load_books_data()
         self.end = ''
 
+        self.clear_cli()
+
+    def clear_cli(self):
+        if os.name == 'nt':
+            os.system('cls')
+        else: 
+            os.system('clear')
+
     # load file contents and store them in a book list 
     def load_books_data(self):
         if os.path.getsize(self.file_name) > 0:
@@ -24,19 +32,48 @@ class Library:
     
     # adding books to the JSON file and list of books
     def add_book(self):
+        exit_adding = ''
         book = {}
         for item in self.args:
-            book[item] = input(f'{item}: ')
+            if not item == 'status':
+                data = input(f'{item}: ')
+            else:
+                data = self.get_book_status()
+                self.clear_cli()
+                print(f'book {book['title']} added')
+
+            book[item] = data
+
         self.books.append(book)
 
         with open(self.file_name, 'w') as file:
             json.dump(self.books, file, indent = 4)
      
+    def get_book_status(self):
+        self.clear_cli()
+        print(
+                'w - want to read\n'
+                'r - currently reading\n'
+                'c - completed\n'
+            )
+
+        status = input('status: ')
+        match status:
+            case 'w':
+                return 'want to read'
+            case 'r':
+                return 'reading'
+            case 'c':
+                return 'completed'
+            case _:
+                return ''
+
     # determinate which metod user selected
     def method_used(self, x):
         match x:
             case 'a':
-                print('\nadd your book')
+                self.clear_cli()
+                print('add your book')
                 self.add_book()
             case 'l':
                 print(self.books)
@@ -60,3 +97,9 @@ def main():
         
 
 main()
+
+# TODO
+# list books better
+# remove book from list and file
+# mark as read/unread
+# text formatting
