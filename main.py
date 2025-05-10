@@ -1,21 +1,20 @@
 import json, os
 
 BOOK_STATUSES = {
-    'w' : 'want to read',
-    'r' : 'reading',
-    'c' : 'completed'
+    'w': 'want to read',
+    'r': 'reading',
+    'c': 'completed'
 }
 
 MENU_OPTIONS = {
-    'a' : 'add books',
-    'l' : 'list all books',
-    'r' : 'remove book',
-    'e' : 'exit'
+    'a': 'add books',
+    'l': 'list all books',
+    'r': 'remove book',
+    'e': 'exit'
 }
 
 
 class Library:
-
     def __init__(self):
         self.books = []
         self.args = ['title', 'author', 'pages', 'status']
@@ -36,7 +35,7 @@ class Library:
         if os.path.getsize(self.file_name) > 0:
             with open(self.file_name, 'r') as file:
                 self.books = json.load(file)
-    
+
     def save_books(self):
         with open(self.file_name, 'w') as file:
             json.dump(self.books, file, indent=4)
@@ -45,7 +44,6 @@ class Library:
         self.clear_cli()
         match option:
             case 'a':
-                print('add your book')
                 self.add_book()
             case 'l':
                 self.list_books()
@@ -53,23 +51,22 @@ class Library:
                 self.remove_book()
             case 'e':
                 self.end = 'e'
-    
-    def add_book(self):
-        book = {}
 
+    def add_book(self):
+        print('add your book')
+        book = {}        
         for key in self.args:
             if key == 'status':
                 book[key] = self.get_book_status()
-                
             else:
-                book[key] = input(f'{key}: ')\
-            
+                book[key] = input(f'{key}: ')
+
         self.books.append(book)
         self.save_books()
 
-        self.clear_cli()    
-        print(f'book {book['title']} added')
-     
+        self.clear_cli()
+        print(f"book '{book['title']}' added")
+
     def get_book_status(self):
         self.clear_cli()
         print('\n'.join([f'{key} - {value}' for key, value in BOOK_STATUSES.items()]))
@@ -78,11 +75,11 @@ class Library:
     def list_books(self):
         if not self.books:
             print('no books to display')
-        else:    
+        else:
             for book in self.books:
-                print(json.dumps(book, indent = 4))
-            
-        input('press enter to exit')
+                print(json.dumps(book, indent=4))
+
+        input('press Enter to continue...')
         self.clear_cli()
 
     def remove_book(self):
@@ -90,31 +87,36 @@ class Library:
             print('no books to remove')
             return
 
-        print('books in library: ')
-        for i, book in enumerate(self.books, 1):
-            print(f'{i}. {book['title']} by {book['author']}')    
+        print('books in library:')
+        for i, book in enumerate(self.books, start=1):
+            print(f"{i}. {book['title']} by {book['author']}")
 
-        title = input('enter book title to delete\ntitle: ')
+        title = input('enter book title to delete:\ntitle: ')
 
         new_books = [book for book in self.books if book.get('title') != title]
 
-        self.clear_cli()        
+        self.clear_cli()
         if len(new_books) < len(self.books):
             self.books = new_books
             self.save_books()
-            print(f'removed book: {title}')
+            print(f"removed book: {title}")
         else:
             print('book not found')
-          
+
+
 def main():
     lib = Library()
 
     while lib.end != 'e':
-        choice = input('\n'.join([f'{key} - {value}'
-                       for key, value in MENU_OPTIONS.items()]) + '\n').lower()
+        print('menu:')
+        for key, value in MENU_OPTIONS.items():
+            print(f'{key} - {value}')
+        choice = input('choose an option: ').lower()
         lib.method_used(choice)
 
-        
 
-main()
+if __name__ == '__main__':
+    main()
 
+# TODO
+# validation for typing pages (must be int)
