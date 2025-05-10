@@ -32,7 +32,6 @@ class Library:
     def clear_cli(self):
         os.system('cls' if os.name == 'nt' else 'clear')
 
-    # load file contents and store them in a book list 
     def load_books_data(self):
         if os.path.getsize(self.file_name) > 0:
             with open(self.file_name, 'r') as file:
@@ -42,7 +41,6 @@ class Library:
         with open(self.file_name, 'w') as file:
             json.dump(self.books, file, indent=4)
 
-    # determinate which metod user selected
     def method_used(self, option):
         self.clear_cli()
         match option:
@@ -56,7 +54,6 @@ class Library:
             case 'e':
                 self.end = 'e'
     
-    # adding books to the JSON file and list of books
     def add_book(self):
         book = {}
 
@@ -78,7 +75,6 @@ class Library:
         print('\n'.join([f'{key} - {value}' for key, value in BOOK_STATUSES.items()]))
         return BOOK_STATUSES.get(input('status: '), 'not specified')
 
-    # list all books
     def list_books(self):
         if not self.books:
             print('no books to display')
@@ -89,7 +85,6 @@ class Library:
         input('press enter to exit')
         self.clear_cli()
 
-    # removing book from file
     def remove_book(self):
         if not self.books:
             print('no books to remove')
