@@ -32,18 +32,16 @@ class Library:
     
     # adding books to the JSON file and list of books
     def add_book(self):
-        exit_adding = ''
         book = {}
-        for item in self.args:
-            if not item == 'status':
-                data = input(f'{item}: ')
+        for key in self.args:
+            if not key == 'status':
+                data = input(f'{key}: ')
             else:
                 data = self.get_book_status()
                 self.clear_cli()
                 print(f'book {book['title']} added')
 
-            book[item] = data
-
+            book[key] = data
         self.books.append(book)
 
         with open(self.file_name, 'w') as file:
@@ -70,13 +68,17 @@ class Library:
 
     # determinate which metod user selected
     def method_used(self, x):
+        self.clear_cli()
         match x:
             case 'a':
-                self.clear_cli()
                 print('add your book')
                 self.add_book()
             case 'l':
-                print(self.books)
+                for item in self.books:
+                    print(json.dumps(item, indent = 4))
+                
+                input('press enter to exit')
+                self.clear_cli()
             case 'r':
                 """ remove book """
             case 'e':
@@ -99,7 +101,5 @@ def main():
 main()
 
 # TODO
-# list books better
 # remove book from list and file
-# mark as read/unread
 # text formatting
