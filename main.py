@@ -56,7 +56,14 @@ class Library:
         print('add your book')
         book = {}        
         for key in self.args:
-            if key == 'status':
+            if key == 'pages':
+                pages = self.get_book_pages(key)
+                if pages is None:
+                    self.clear_cli()
+                    print('too many attempts')    
+                    return
+                book[key] = pages
+            elif key == 'status':
                 book[key] = self.get_book_status()
             else:
                 book[key] = input(f'{key}: ')
@@ -67,6 +74,18 @@ class Library:
         self.clear_cli()
         print(f"book '{book['title']}' added")
 
+    def get_book_pages(self, key):
+        i = 0
+        while i < 3:
+            try:
+                x = int(input(f'{key}: '))
+                i = 3
+                return x
+            except:
+                i += 1
+                print('value needs to be an integer')
+        return None
+    
     def get_book_status(self):
         self.clear_cli()
         print('\n'.join([f'{key} - {value}' for key, value in BOOK_STATUSES.items()]))
@@ -119,4 +138,3 @@ if __name__ == '__main__':
     main()
 
 # TODO
-# validation for typing pages (must be int)
