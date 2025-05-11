@@ -138,3 +138,11 @@ if __name__ == '__main__':
     main()
 
 # TODO
+# date when book was completed/started
+# possibility to rate a book
+# ability to modify book status
+# ability to modify any of book properties 
+# make GUI (tkinter?)
+# add SQL database 
+# connect to google books API to fetch covers/info
+# user should pick from fetched books or add his custom one
