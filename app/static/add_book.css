@@ -20,3 +20,13 @@ input {
     user-select: none;
     width: 100%;
 }
+
+#add_buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+#add_buttons * {
+    width: 5vw;
+    margin: 2px;
+}
