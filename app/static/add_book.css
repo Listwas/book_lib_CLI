@@ -1,0 +1,22 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    gap: 10px;
+}
+
+td {
+    user-select: none;
+}
+
+input {
+    margin: 4px;
+    padding: 4px;
+    border: none;
+    border-bottom: 1px dashed #060606;
+    outline: none;
+    user-select: none;
+    width: 100%;
+}
