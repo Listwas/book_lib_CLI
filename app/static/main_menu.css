@@ -1,8 +1,3 @@
-#container h1 {
-    font-size: 2rem;
-    margin-bottom: 12px;
-}
-
 #buttons * {
     background-color: #FFFFFF;
     box-sizing: border-box;
@@ -28,4 +23,8 @@
     border: 1px solid #b6b6b6;
     color: #7d7d7d;
     cursor: pointer;
+}
+
+h3 span{
+    color: green;
 }
