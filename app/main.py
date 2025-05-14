@@ -14,10 +14,10 @@ MENU_OPTIONS = {
 }
 
 class Library:
-    def __init__(self):
+    def __init__(self, file_name):
         self.books = []
         self.args = ['title', 'author', 'pages', 'status']
-        self.file_name = 'books_data.json'
+        self.file_name = file_name
         self.end = ''
 
         if not os.path.exists(self.file_name):
@@ -25,10 +25,6 @@ class Library:
                 json.dump([], file)
 
         self.load_books_data()
-        self.clear_cli()
-
-    def clear_cli(self):
-        os.system('cls' if os.name == 'nt' else 'clear')
 
     def load_books_data(self):
         if os.path.getsize(self.file_name) > 0:
@@ -39,66 +35,19 @@ class Library:
         with open(self.file_name, 'w') as file:
             json.dump(self.books, file, indent=4)
 
-    def method_used(self, option):
-        self.clear_cli()
-        match option:
-            case 'a':
-                self.add_book()
-            case 'l':
-                self.list_books()
-            case 'r':
-                self.remove_book()
-            case 'e':
-                self.end = 'e'
-
-    def add_book(self):
-        print('add your book')
-        book = {}        
-        for key in self.args:
-            if key == 'pages':
-                pages = self.get_book_pages(key)
-                if pages is None:
-                    self.clear_cli()
-                    print('too many attempts')    
-                    return
-                book[key] = pages
-            elif key == 'status':
-                book[key] = self.get_book_status()
-            else:
-                book[key] = input(f'{key}: ')
-
+    def add_book(self, book):
         self.books.append(book)
         self.save_books()
 
-        self.clear_cli()
         print(f"book '{book['title']}' added")
-
-    def get_book_pages(self, key):
-        i = 0
-        while i < 3:
-            try:
-                x = int(input(f'{key}: '))
-                i = 3
-                return x
-            except:
-                i += 1
-                print('value needs to be an integer')
-        return None
     
     def get_book_status(self):
-        self.clear_cli()
         print('\n'.join([f'{key} - {value}' for key, value in BOOK_STATUSES.items()]))
         return BOOK_STATUSES.get(input('status: '), 'not specified')
 
     def list_books(self):
         if not self.books:
-            print('no books to display')
-        else:
-            for book in self.books:
-                print(json.dumps(book, indent=4))
-
-        input('press Enter to continue...')
-        self.clear_cli()
+            return 'no books to display'                
 
     def remove_book(self):
         if not self.books:
@@ -113,7 +62,6 @@ class Library:
 
         new_books = [book for book in self.books if book.get('title') != title]
 
-        self.clear_cli()
         if len(new_books) < len(self.books):
             self.books = new_books
             self.save_books()
@@ -122,14 +70,14 @@ class Library:
             print('book not found')        
 
 def main():
-    lib = Library()
+    lib = Library('books_data.json')
     
     while lib.end != 'e':
         print('menu:')
         for key, value in MENU_OPTIONS.items():
             print(f'{key} - {value}')
         choice = input('choose an option: ').lower()
-        lib.method_used(choice)
+    
 
 if __name__ == '__main__':
     main()
