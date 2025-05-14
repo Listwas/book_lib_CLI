@@ -1,0 +1,31 @@
+#container h1 {
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+#buttons * {
+    background-color: #FFFFFF;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid #222222;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 4px;
+    padding: 13px 23px;
+    user-select: none;
+    outline: none;
+    transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
+}
+
+#buttons *:active {
+  background-color: #F7F7F7;
+  border-color: #000000;
+  transform: scale(.96);
+}
+
+#buttons *:hover {
+    border: 1px solid #b6b6b6;
+    color: #7d7d7d;
+    cursor: pointer;
+}
