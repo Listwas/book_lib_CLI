@@ -4,13 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/index.css" />
+    <link rel="stylesheet" href="static/add_book.css">
 
     <title>Online Library</title>
 </head>
 <body>
     <main>
         <div id="container">
-            <h1>123</h1>
+            <h1>Add your book</h1>
+            <form action='/get_data' method="POST">
+                <table>
+                    <tr>
+                        <td>title: </td>
+                        <td><input name="title" placeholder="title" /></td>
+                    </tr>
+                    <tr>
+                        <td>author: </td>
+                        <td><input name="author" placeholder="author" /></td>
+                    </tr>
+                    <tr>
+                        <td>pages: </td>
+                        <td><input name="pages" placeholder="pages" type="number" min="0" /></td>
+                    </tr>
+                    <tr>
+                        <td>status: </td>
+                        <td><input name="status" placeholder="status" /></td>
+                    </tr>
+                </table>
+   
+                <button type="submit">add</button>
+
+            </form>
+           
         </div>
     </main>
 </body>
