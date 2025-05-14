@@ -12,27 +12,29 @@
     <main>
         <div id="container">
             <h1>Add your book</h1>
-            <form action='/get_data' method="POST">
+            <form action='/get_data' method="POST" autocomplete="off">
                 <table>
                     <tr>
                         <td>title: </td>
-                        <td><input name="title" placeholder="title" /></td>
+                        <td><input name="title" placeholder="title" required></td>
                     </tr>
                     <tr>
                         <td>author: </td>
-                        <td><input name="author" placeholder="author" /></td>
+                        <td><input name="author" placeholder="author" required/></td>
                     </tr>
                     <tr>
                         <td>pages: </td>
-                        <td><input name="pages" placeholder="pages" type="number" min="0" /></td>
+                        <td><input name="pages" placeholder="pages" type="number" min="0" required/></td>
                     </tr>
                     <tr>
                         <td>status: </td>
-                        <td><input name="status" placeholder="status" /></td>
+                        <td><input name="status" placeholder="status" required/></td>
                     </tr>
                 </table>
-   
-                <button type="submit">add</button>
+                <div id="add_buttons" class="buttons">
+                    <button type="text">back</button>
+                    <button type="submit">add</button>
+                </div>
 
             </form>
            
